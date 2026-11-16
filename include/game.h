@@ -11,6 +11,7 @@ class Game {
 public:
   /// @param title the name shown to the player
   explicit Game(std::string title);
+  virtual ~Game() = default;
 
   /// @return the game's title
   const std::string &title() const;
@@ -18,8 +19,8 @@ public:
   /// @return the score from the most recent play, or 0 if never played
   int last_score() const;
 
-  /// Placeholder. Derived classes define their own play() this week.
-  void play();
+  /// Play this game.
+  virtual void play() = 0;
 
 protected:
   /// Record the score of a finished game.

@@ -20,6 +20,7 @@ if(ENABLE_ASAN)
 endif()
 
 add_library(arcade_lib STATIC
+    src/arcade.cpp
     src/blackjack.cpp
     src/blackjack_game.cpp
     src/board.cpp
@@ -36,6 +37,9 @@ add_library(arcade_lib STATIC
     src/item.cpp
     src/minesweeper.cpp
     src/minesweeper_game.cpp
+    src/monster.cpp
+    src/goblin.cpp
+    src/troll.cpp
     src/player.cpp
     src/room.cpp
 )

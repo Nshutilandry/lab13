@@ -32,20 +32,54 @@ One sentence on what `ptype Hangman` revealed about inheritance:
 
 ## Week 13 (Lab 13)
 
-Each partner writes their own section. Put your name here:
+Each partner writes their own section. Put your name here: **[your name]**
 
 ### A Game pointer with a virtual play()
 
-`set print object on`, then `print *g` (paste it). What changed from Week 12?
+Commands used:
 
-`info vtbl *g` (paste it). Which functions are in the table?
+```
+set print object on
+print *g
+info vtbl *g
+step
+```
+
+Paste your actual `print *g` and `info vtbl *g` output here. With dynamic
+object printing enabled, GDB should identify the object as `Hangman`; the
+virtual function table should include its `play()` implementation. The exact
+format and other entries depend on the compiler and debug information.
+
+What changed from Week 12? The pointer's declared type remains `Game *`, but
+GDB can show the dynamic `Hangman` object. A virtual call through `g` uses
+dynamic dispatch.
+
+Which functions are in the table? Record the names shown by your `info vtbl`
+output; at minimum it should include the virtual destructor and `play()`.
 
 Where `step` into `g->play()` landed, and how that compares with Week 12:
+It should enter `Hangman::play()` rather than the base placeholder that ran
+last week. Replace this expected description with what your debugger showed.
 
 ### A Monster pointer
 
-`print *monster` and `ptype monster` with `set print object on` (paste them). Which shows the derived object, and which still shows the base type?
+Commands used:
 
-`info vtbl *monster` for a Goblin, then for a Troll (paste both). Compare the entries:
+```
+set print object on
+print *monster
+ptype monster
+info vtbl *monster
+```
 
-Where `step` into `monster->attack_damage()` landed for each kind:
+Paste actual output for a Goblin and a Troll. `print *monster` can show the
+dynamic derived object; `ptype monster` reports the expression's static type,
+`Monster *`. The vtables should differ in their `attack_damage()` and
+`describe()` implementations. `step` into `monster->attack_damage()` should
+land in `Goblin::attack_damage()` for the Goblin and `Troll::attack_damage()`
+for the Troll.
+
+GDB is not available in the workspace used to prepare this file, so the
+compiler-specific transcripts and personal observations above must be
+captured by each partner when running the debugger; no output is fabricated
+here.

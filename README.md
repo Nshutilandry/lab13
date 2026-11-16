@@ -1,27 +1,27 @@
 # Arcade: Week 13 starter (S13)
 
-A text-game arcade in C++20. This is the starting point for **Lab 13: Polymorphism**. It is your Lab 12 solution: four games derived from `Game`, with a non-virtual `play()`. `main` creates the objects directly and prints `last_score()` after each one.
+A text-game arcade in C++20. The four games derive from the abstract `Game`
+base class and are played through an owning `Arcade` that stores `Game *`
+pointers. The Dungeon also owns room monsters through `Monster *` pointers and
+dispatches combat actions virtually.
 
 ## What is already here
 
 | Part | Files | Notes |
 | --- | --- | --- |
-| Game hierarchy (finished) | `game.*`, `hangman_game.*`, `dungeon_game.*`, `blackjack_game.*`, `minesweeper_game.*` | `play()` is not virtual yet |
+| Game hierarchy | `game.*`, `hangman_game.*`, `dungeon_game.*`, `blackjack_game.*`, `minesweeper_game.*` | Abstract base with virtual `play()` |
 | The games | `hangman.*`, `dungeon.*`, `blackjack.*`, `minesweeper.*` and their helper classes | The `play_*` functions |
-| **Arcade** | `include/arcade.h` | Signatures are given. You write `src/arcade.cpp`. |
-| **Monster** | `include/monster.h` | The abstract `Monster` is declared. You write `src/monster.cpp`, `goblin.*`, `troll.*`. |
-| Combat | `src/dungeon.cpp` | `fight()` and `meet_monster()` have a description and a TODO |
+| **Arcade** | `include/arcade.h`, `src/arcade.cpp` | Owns games and runs the polymorphic menu. |
+| **Monster** | `include/monster.h`, `src/monster.cpp`, `goblin.*`, `troll.*` | Abstract base and two concrete monsters. |
+| Combat | `src/dungeon.cpp`, `room.*` | Rooms own monsters; combat uses the Monster interface. |
 | Tests | `tests/` | `test_arcade.cpp` and `test_monster.cpp` build automatically once the files they need exist |
 | Notes to fill in | `POLYMORPHISM_NOTES.md`, `GDB_LOG.md` | |
 
 ## File names
 
-The tests expect these files, so use these names:
-
-- `src/arcade.cpp`
-- `src/monster.cpp`, `include/goblin.h`, `src/goblin.cpp`, `include/troll.h`, `src/troll.cpp`
-
-Classes: `Goblin` (3 damage, 8 health) and `Troll` (6 damage, 20 health). Each has a default constructor. Add every new `.cpp` file to the `arcade_lib` list in `CMakeLists.txt`.
+`Goblin` (3 damage, 8 health) and `Troll` (6 damage, 20 health) each have a
+default constructor. All implementation files are listed in `arcade_lib` in
+`CMakeLists.txt`.
 
 ## Build and run
 
