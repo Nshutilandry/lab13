@@ -2,10 +2,11 @@
 
 ## 1. The non-virtual destructor
 
-Deleting a derived game through a `Game *` when `Game` has a non-virtual
-destructor is undefined behavior. `Game::~Game()` runs, but the derived
-destructor does not, so derived cleanup is skipped; AddressSanitizer's exact
-diagnostic depends on the runtime and what the derived destructor owns.
+I could not run the requested AddressSanitizer experiment in this workspace,
+so I cannot report its actual output. Deleting a derived game through a
+`Game *` with a non-virtual destructor is undefined behavior: the base
+destructor runs, but the derived destructor does not, which skips derived
+cleanup.
 
 ## 2. Game is abstract
 

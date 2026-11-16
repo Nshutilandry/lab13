@@ -64,18 +64,18 @@ constexpr int monster_bonus = 25;
 
 /// Fight one monster.
 ///
-/// Every round: print monster.describe() and the player's health; read `a`
+/// Every round: print monster->describe() and the player's health; read `a`
 /// (attack for player_attack damage) or `f` (flee); if the monster is still
-/// alive it hits back for monster.attack_damage(). Return FightResult::won
+/// alive it hits back for monster->attack_damage(). Return FightResult::won
 /// when the monster dies, ::fled if the player flees (or input ends), and
 /// ::died if the player's health reaches 0.
 ///
 /// Use only the Monster interface. There must be no `if` on the kind of
 /// monster.
-[[maybe_unused]] FightResult fight(Player &player, Monster &monster) {
+[[maybe_unused]] FightResult fight(Player &player, Monster *monster) {
   std::string line;
-  while (player.is_alive() && !monster.is_dead()) {
-    std::cout << monster.describe() << "\n"
+  while (player.is_alive() && !monster->is_dead()) {
+    std::cout << monster->describe() << "\n"
               << "Your health: " << player.health() << "\n";
     if (!prompt_line("Attack or flee? (a/f): ", line)) {
       return FightResult::fled;
@@ -88,11 +88,11 @@ constexpr int monster_bonus = 25;
       continue;
     }
 
-    monster.take_damage(player_attack);
-    if (!monster.is_dead()) {
-      player.take_damage(monster.attack_damage());
-      std::cout << "The " << monster.name() << " hits you for "
-                << monster.attack_damage() << " damage.\n";
+    monster->take_damage(player_attack);
+    if (!monster->is_dead()) {
+      player.take_damage(monster->attack_damage());
+      std::cout << "The " << monster->name() << " hits you for "
+                << monster->attack_damage() << " damage.\n";
     }
   }
   return player.is_alive() ? FightResult::won : FightResult::died;
@@ -109,7 +109,7 @@ constexpr int monster_bonus = 25;
   if (monster == nullptr || monster->is_dead()) {
     return true;
   }
-  const FightResult result{fight(player, *monster)};
+  const FightResult result{fight(player, monster)};
   if (result == FightResult::died) {
     return false;
   }
